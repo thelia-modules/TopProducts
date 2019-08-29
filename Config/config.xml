@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<config xmlns="http://thelia.net/schema/dic/config"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://thelia.net/schema/dic/config http://thelia.net/schema/dic/config/thelia-1.0.xsd">
+
+    <loops>
+        <loop name="top_products" class="TopProducts\Loop\TopProductsLoop" />
+    </loops>
+
+    <forms>
+        <!--
+        <form name="MyFormName" class="TopProducts\Form\MySuperForm" />
+        -->
+    </forms>
+
+    <commands>
+        <!--
+        <command class="TopProducts\Command\MySuperCommand" />
+        -->
+    </commands>
+
+    <services>
+        <service id="top_products.smarty.plugin" class="TopProducts\Smarty\TopProducts">
+            <tag name="thelia.parser.register_plugin"/>
+        </service>
+    </services>
+
+    <hooks>
+        <hook id="top_products.hook" class="TopProducts\Hook\TopProductsHook">
+            <tag name="hook.event_listener" type="backoffice" event="category.tab" method="addCategoryTopProductsTab"/>
+            <tag name="hook.event_listener" type="backoffice" event="brand.tab" method="addBrandTopProductsTab"/>
+
+            <tag name="hook.event_listener" type="backoffice" event="category.edit-js" method="addTopProductsJs"/>
+            <tag name="hook.event_listener" type="backoffice" event="brand.edit-js" method="addTopProductsJs"/>
+
+            <tag name="hook.event_listener" type="backoffice" event="main.head-css" method="addTopProductsCss"/>
+        </hook>
+    </hooks>
+
+    <!--
+    <exports>
+
+    </exports>
+    -->
+
+    <!--
+    <imports>
+
+    </imports>
+    -->
+</config>
