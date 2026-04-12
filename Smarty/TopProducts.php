@@ -9,7 +9,7 @@ use TopProducts\Model\TopProductQuery;
 
 class TopProducts extends AbstractSmartyPlugin
 {
-    public function getPluginDescriptors()
+    public function getPluginDescriptors(): array
     {
         return [
             new SmartyPluginDescriptor('function', 'top_products', $this, 'getTopProducts'),
