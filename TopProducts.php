@@ -13,8 +13,9 @@
 namespace TopProducts;
 
 use Propel\Runtime\Connection\ConnectionInterface;
+use Symfony\Component\DependencyInjection\Loader\Configurator\ServicesConfigurator;
 use Symfony\Component\Finder\Finder;
-use Thelia\Install\Database;
+use Thelia\Core\Install\Database;
 use Thelia\Module\BaseModule;
 use TopProducts\Model\TopProductQuery;
 
@@ -25,18 +26,34 @@ class TopProducts extends BaseModule
 
     const UPDATE_PATH = __DIR__ . DS . 'Config' . DS . 'update';
 
-    public function postActivation(ConnectionInterface $con = null)
+    public static function configureServices(ServicesConfigurator $services): void
+    {
+        $services->load(self::getModuleCode().'\\', __DIR__)
+            ->exclude([
+                __DIR__.'/I18n/*',
+                __DIR__.'/Config/**/*.php',
+                __DIR__.'/Tests/*',
+                __DIR__.'/TopProducts.php',
+                __DIR__.'/Model/Base/*',
+                __DIR__.'/Model/Map/*',
+                __DIR__.'/Smarty/*',
+            ])
+            ->autowire(true)
+            ->autoconfigure(true);
+    }
+
+    public function postActivation(ConnectionInterface $con = null): void
     {
         $database = new Database($con);
 
         try {
             TopProductQuery::create()->findOne();
         } catch (\Exception $e) {
-            $database->insertSql(null, array(__DIR__ . '/Config/thelia.sql'));
+            $database->insertSql(null, [__DIR__ . '/Config/thelia.sql']);
         }
     }
 
-    public function update($currentVersion, $newVersion, ConnectionInterface $con = null)
+    public function update($currentVersion, $newVersion, ConnectionInterface $con = null): void
     {
         $finder = (new Finder())->files()->name('#.*?\.sql#')->sortByName()->in(self::UPDATE_PATH);
 

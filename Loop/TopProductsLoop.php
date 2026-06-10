@@ -13,10 +13,7 @@ use TopProducts\Model\Map\TopProductTableMap;
 
 class TopProductsLoop extends ProductLoop
 {
-    /**
-     * @return ArgumentCollection
-     */
-    protected function getArgDefinitions()
+    protected function getArgDefinitions(): ArgumentCollection
     {
         $argumentCollection = parent::getArgDefinitions();
 
@@ -32,11 +29,7 @@ class TopProductsLoop extends ProductLoop
         return $argumentCollection;
     }
 
-    /**
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|ProductQuery
-     * @throws \Propel\Runtime\Exception\PropelException
-     */
-    public function buildModelCriteria()
+    public function buildModelCriteria(): \Propel\Runtime\ActiveQuery\ModelCriteria
     {
         /** @var ProductQuery $search */
         $search = parent::buildModelCriteria();

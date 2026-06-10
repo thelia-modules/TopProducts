@@ -9,7 +9,28 @@ use TopProducts\TopProducts;
 
 class TopProductsHook extends BaseHook
 {
-    public function addCategoryTopProductsTab(HookRenderBlockEvent $event)
+    public static function getSubscribedHooks(): array
+    {
+        return [
+            'category.tab' => [
+                ['type' => 'back', 'method' => 'addCategoryTopProductsTab'],
+            ],
+            'brand.tab' => [
+                ['type' => 'back', 'method' => 'addBrandTopProductsTab'],
+            ],
+            'category.edit-js' => [
+                ['type' => 'back', 'method' => 'addTopProductsJs'],
+            ],
+            'brand.edit-js' => [
+                ['type' => 'back', 'method' => 'addTopProductsJs'],
+            ],
+            'main.head-css' => [
+                ['type' => 'back', 'method' => 'addTopProductsCss'],
+            ],
+        ];
+    }
+
+    public function addCategoryTopProductsTab(HookRenderBlockEvent $event): void
     {
         $categoryId = $event->getArgument('id');
 
@@ -18,7 +39,7 @@ class TopProductsHook extends BaseHook
                 'id' => 'top_products',
                 'title' => $this->trans('Top products', [], TopProducts::DOMAIN_NAME),
                 'content' => $this->render(
-                    'top_products/top_products_tab_content.html',
+                    'TopProducts/top_products_tab_content.html.twig',
                     [
                         'elementKey' => 'category',
                         'elementId' => $categoryId
@@ -28,7 +49,7 @@ class TopProductsHook extends BaseHook
         );
     }
 
-    public function addBrandTopProductsTab(HookRenderBlockEvent $event)
+    public function addBrandTopProductsTab(HookRenderBlockEvent $event): void
     {
         $brandId = $event->getArgument('brand_id');
 
@@ -37,7 +58,7 @@ class TopProductsHook extends BaseHook
                 'id' => 'top_products',
                 'title' => $this->trans('Top products', [], TopProducts::DOMAIN_NAME),
                 'content' => $this->render(
-                    'top_products/top_products_tab_content.html',
+                    'TopProducts/top_products_tab_content.html.twig',
                     [
                         'elementKey' => 'brand',
                         'elementId' => $brandId
@@ -47,18 +68,13 @@ class TopProductsHook extends BaseHook
         );
     }
 
-    public function addTopProductsJs(HookRenderEvent $event)
+    public function addTopProductsJs(HookRenderEvent $event): void
     {
-        $js = $this->addJS('top_products/assets/dist/js/app.js');
-
-        $event->add($js);
+        $event->add($this->render('TopProducts/top_products_js.html.twig'));
     }
 
-    public function addTopProductsCss(HookRenderEvent $event)
+    public function addTopProductsCss(HookRenderEvent $event): void
     {
-        $css = $this->addCSS('top_products/assets/dist/css/app.css');
-
-        $event->add($css);
+        $event->add('<link rel="stylesheet" href="/modules/TopProducts/top_products/assets/dist/css/app.css">');
     }
-
 }
