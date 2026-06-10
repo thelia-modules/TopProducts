@@ -2,6 +2,7 @@
 
 namespace TopProducts\Model;
 
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Thelia\Model\Tools\PositionManagementTrait;
 use TopProducts\Model\Base\TopProduct as BaseTopProduct;
@@ -10,17 +11,14 @@ class TopProduct extends BaseTopProduct
 {
     use PositionManagementTrait;
 
-    /**
-     * @inheritdoc
-     */
-    protected function addCriteriaToPositionQuery(TopProductQuery $query)
+    protected function addCriteriaToPositionQuery(ModelCriteria $query): void
     {
         $query->filterBySelectionCode($this->getSelectionCode())
             ->filterByElementKey($this->getElementKey())
             ->filterByElementId($this->getElementId());
     }
 
-    public function preDelete(ConnectionInterface $con = null)
+    public function preDelete(?ConnectionInterface $con = null): bool
     {
         $this->reorderBeforeDelete(
             array(
