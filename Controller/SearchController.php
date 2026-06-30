@@ -18,9 +18,12 @@ class SearchController extends BaseAdminController
 {
     public function searchAction($elementKey, $elementId)
     {
-        $search = $this->getRequest()->get('q');
+        $request = $this->getRequest();
+        $search = $request->attributes->get('q', $request->query->get('q', $request->request->get('q')));
 
-        $locale = $this->getSession()->getLang()->getLocale();
+        $locale = $request->hasSession()
+            ? $request->getSession()->getLang()->getLocale()
+            : (\Thelia\Model\LangQuery::create()->findOneByByDefault(true)?->getLocale() ?? 'en_US');
 
         $productQuery= ProductQuery::create()
             ->joinWithI18n($locale);

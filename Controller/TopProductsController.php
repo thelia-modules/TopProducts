@@ -19,7 +19,10 @@ class TopProductsController extends BaseAdminController
             return $response;
         }
 
-        $locale = $this->getSession()->getLang()->getLocale();
+        $request = $this->getRequest();
+        $locale = $request->hasSession()
+            ? $request->getSession()->getLang()->getLocale()
+            : (\Thelia\Model\LangQuery::create()->findOneByByDefault(true)?->getLocale() ?? 'en_US');
 
         $topProducts = TopProductQuery::create()
             ->filterByElementKey($elementKey)
@@ -69,7 +72,8 @@ class TopProductsController extends BaseAdminController
         }
 
         try {
-            $productId = $this->getRequest()->get('productId');
+            $request = $this->getRequest();
+            $productId = $request->attributes->get('productId', $request->query->get('productId', $request->request->get('productId')));
 
             $topProduct = (new TopProduct())
                 ->setElementId($elementId)
@@ -116,7 +120,8 @@ class TopProductsController extends BaseAdminController
         }
 
         try {
-            $newProductId = $this->getRequest()->get('newProductId');
+            $request = $this->getRequest();
+            $newProductId = $request->attributes->get('newProductId', $request->query->get('newProductId', $request->request->get('newProductId')));
 
             $topProduct = TopProductQuery::create()
                 ->findOneById($topProductId);
@@ -142,7 +147,8 @@ class TopProductsController extends BaseAdminController
 
         try {
 
-            $newPosition = $this->getRequest()->get('newPosition');
+            $request = $this->getRequest();
+            $newPosition = $request->attributes->get('newPosition', $request->query->get('newPosition', $request->request->get('newPosition')));
 
             $newPosition++;
 
