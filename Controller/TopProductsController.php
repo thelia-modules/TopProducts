@@ -5,15 +5,20 @@ namespace TopProducts\Controller;
 
 
 use Thelia\Controller\Admin\BaseAdminController;
-use Thelia\Controller\Front\BaseFrontController;
 use Thelia\Core\HttpFoundation\JsonResponse;
+use Thelia\Core\Security\AccessManager;
+use Thelia\Core\Security\Resource\AdminResources;
 use TopProducts\Model\TopProduct;
 use TopProducts\Model\TopProductQuery;
 
-class TopProductsController extends BaseFrontController
+class TopProductsController extends BaseAdminController
 {
     public function getProductAction($elementKey, $elementId)
     {
+        if (null !== $response = $this->checkAuth([AdminResources::MODULE], ['TopProducts'], AccessManager::VIEW)) {
+            return $response;
+        }
+
         $locale = $this->getSession()->getLang()->getLocale();
 
         $topProducts = TopProductQuery::create()
@@ -59,6 +64,10 @@ class TopProductsController extends BaseFrontController
 
     public function addProductAction($elementKey, $elementId, $selectionCode)
     {
+        if (null !== $response = $this->checkAuth([AdminResources::MODULE], ['TopProducts'], AccessManager::UPDATE)) {
+            return $response;
+        }
+
         try {
             $productId = $this->getRequest()->get('productId');
 
@@ -80,9 +89,17 @@ class TopProductsController extends BaseFrontController
 
     public function removeProductAction($topProductId)
     {
+        if (null !== $response = $this->checkAuth([AdminResources::MODULE], ['TopProducts'], AccessManager::UPDATE)) {
+            return $response;
+        }
+
         try {
             $topProduct = TopProductQuery::create()
                 ->findOneById($topProductId);
+
+            if (null === $topProduct) {
+                return new JsonResponse(['error' => 'Top product not found'], 404);
+            }
 
             $topProduct->delete();
         } catch (\Exception $e) {
@@ -94,11 +111,19 @@ class TopProductsController extends BaseFrontController
 
     public function updateProductAction($topProductId)
     {
+        if (null !== $response = $this->checkAuth([AdminResources::MODULE], ['TopProducts'], AccessManager::UPDATE)) {
+            return $response;
+        }
+
         try {
             $newProductId = $this->getRequest()->get('newProductId');
 
             $topProduct = TopProductQuery::create()
                 ->findOneById($topProductId);
+
+            if (null === $topProduct) {
+                return new JsonResponse(['error' => 'Top product not found'], 404);
+            }
 
             $topProduct->setProductId($newProductId)
                 ->save();
@@ -111,6 +136,10 @@ class TopProductsController extends BaseFrontController
 
     public function updatePositionAction($topProductId)
     {
+        if (null !== $response = $this->checkAuth([AdminResources::MODULE], ['TopProducts'], AccessManager::UPDATE)) {
+            return $response;
+        }
+
         try {
 
             $newPosition = $this->getRequest()->get('newPosition');
@@ -119,6 +148,10 @@ class TopProductsController extends BaseFrontController
 
             $topProduct = TopProductQuery::create()
                 ->findOneById($topProductId);
+
+            if (null === $topProduct) {
+                return new JsonResponse(['error' => 'Top product not found'], 404);
+            }
 
             $topProduct->changeAbsolutePosition($newPosition);
 
