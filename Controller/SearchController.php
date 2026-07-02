@@ -4,6 +4,7 @@
 namespace TopProducts\Controller;
 
 use Propel\Runtime\ActiveQuery\Criteria;
+use Symfony\Component\Routing\Attribute\Route;
 use Thelia\Controller\Admin\BaseAdminController;
 use Thelia\Core\HttpFoundation\JsonResponse;
 use Thelia\Model\Category;
@@ -16,6 +17,7 @@ use Thelia\Model\ProductQuery;
 
 class SearchController extends BaseAdminController
 {
+    #[Route('/admin/top_products/search/{elementKey}/{elementId}', name: 'top_products_search')]
     public function searchAction($elementKey, $elementId)
     {
         $request = $this->getRequest();
@@ -46,10 +48,10 @@ class SearchController extends BaseAdminController
             $i++;
             $searchConditionName = "search_$i";
             $referenceConditionName = "ref_$i";
-            $productQuery->addCond($searchConditionName, ProductI18nTableMap::TITLE, "%$searchTerm%", Criteria::LIKE);
+            $productQuery->addCond($searchConditionName, ProductI18nTableMap::COL_TITLE, "%$searchTerm%", Criteria::LIKE);
             $searchConditions[] = $searchConditionName;
 
-            $productQuery->addCond($referenceConditionName, ProductTableMap::REF, "$searchTerm", Criteria::LIKE);
+            $productQuery->addCond($referenceConditionName, ProductTableMap::COL_REF, "$searchTerm", Criteria::LIKE);
             $referenceConditions[] = $referenceConditionName;
         }
 
@@ -58,16 +60,8 @@ class SearchController extends BaseAdminController
 
         $productQuery->combine(['search', 'ref'], Criteria::LOGICAL_OR);
 
-//        dump($productQuery->toString());
 
-        $productQuery
-//            ->useProductI18nQuery()
-//                ->filterByLocale($locale)
-//                ->filterByTitle("%$search%", Criteria::LIKE)
-//            ->endUse()
-            ->groupById();
-
-        $productResults = $productQuery->find();
+        $productResults = $productQuery->groupById()->find();
 
         $products = [];
 

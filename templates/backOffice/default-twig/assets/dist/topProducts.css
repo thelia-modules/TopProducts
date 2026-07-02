@@ -1,0 +1,35 @@
+/*!******************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].oneOf[1].use[1]!./node_modules/resolve-url-loader/index.js??ruleSet[1].rules[4].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].oneOf[1].use[3]!./src/scss/topProducts.scss ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************/
+#top_products_container h3 {
+  margin-left: 20px;
+}
+#top_products_container .TopProducts-product-list {
+  display: table;
+}
+#top_products_container .TopProducts-product-list-item {
+  padding: 15px;
+  margin: 10px;
+  height: 120px;
+  max-width: 260px;
+  border: 2px dashed grey;
+  list-style: none;
+  display: block;
+  float: left;
+}
+#top_products_container .TopProducts-product-select {
+  background-color: white;
+  overflow-y: scroll;
+  max-height: 250px;
+  z-index: 100000;
+  position: relative;
+  box-shadow: -1px 13px 19px rgba(0, 0, 0, 0.5);
+}
+#top_products_container .TopProducts-product-select > div {
+  padding: 5px;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+}
+#top_products_container .TopProducts-product-select > div:hover {
+  background-color: #ccc;
+}

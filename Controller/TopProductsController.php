@@ -1,9 +1,8 @@
 <?php
 
-
 namespace TopProducts\Controller;
 
-
+use Symfony\Component\Routing\Attribute\Route;
 use Thelia\Controller\Admin\BaseAdminController;
 use Thelia\Core\HttpFoundation\JsonResponse;
 use Thelia\Core\Security\AccessManager;
@@ -13,6 +12,7 @@ use TopProducts\Model\TopProductQuery;
 
 class TopProductsController extends BaseAdminController
 {
+    #[Route('/admin/top_products/get/{elementKey}/{elementId}', name: 'top_products_get', methods: ['GET'])]
     public function getProductAction($elementKey, $elementId)
     {
         if (null !== $response = $this->checkAuth([AdminResources::MODULE], ['TopProducts'], AccessManager::VIEW)) {
@@ -65,6 +65,7 @@ class TopProductsController extends BaseAdminController
         return new JsonResponse(['topProductSelections' => array_values($results)]);
     }
 
+    #[Route('/admin/top_products/add/{elementKey}/{elementId}/{selectionCode}', name: 'top_products_add', methods: ['POST'])]
     public function addProductAction($elementKey, $elementId, $selectionCode)
     {
         if (null !== $response = $this->checkAuth([AdminResources::MODULE], ['TopProducts'], AccessManager::UPDATE)) {
@@ -84,13 +85,14 @@ class TopProductsController extends BaseAdminController
             $topProduct->setPosition($topProduct->getNextPosition());
 
             $topProduct->save();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             return new JsonResponse(['error' => $e->getMessage()], $e->getCode());
         }
 
         return new JsonResponse(['id' => $topProduct->getId(), 'position' => $topProduct->getPosition()]);
     }
 
+    #[Route('/admin/top_products/remove/{topProductId}', name: 'top_products_remove', methods: ['POST'])]
     public function removeProductAction($topProductId)
     {
         if (null !== $response = $this->checkAuth([AdminResources::MODULE], ['TopProducts'], AccessManager::UPDATE)) {
@@ -113,6 +115,7 @@ class TopProductsController extends BaseAdminController
         return new JsonResponse();
     }
 
+    #[Route('/admin/top_products/update/{topProductId}', name: 'top_products_update', methods: ['POST'])]
     public function updateProductAction($topProductId)
     {
         if (null !== $response = $this->checkAuth([AdminResources::MODULE], ['TopProducts'], AccessManager::UPDATE)) {
@@ -139,6 +142,7 @@ class TopProductsController extends BaseAdminController
         return new JsonResponse(['product' => $topProduct]);
     }
 
+    #[Route('/admin/top_products/position/{topProductId}', name: 'top_products_position', methods: ['POST'])]
     public function updatePositionAction($topProductId)
     {
         if (null !== $response = $this->checkAuth([AdminResources::MODULE], ['TopProducts'], AccessManager::UPDATE)) {

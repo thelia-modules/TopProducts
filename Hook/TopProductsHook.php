@@ -39,7 +39,7 @@ class TopProductsHook extends BaseHook
                 'id' => 'top_products',
                 'title' => $this->trans('Top products', [], TopProducts::DOMAIN_NAME),
                 'content' => $this->render(
-                    'TopProducts/top_products_tab_content.html.twig',
+                    'top_products_tab_content.html.twig',
                     [
                         'elementKey' => 'category',
                         'elementId' => $categoryId
@@ -58,7 +58,7 @@ class TopProductsHook extends BaseHook
                 'id' => 'top_products',
                 'title' => $this->trans('Top products', [], TopProducts::DOMAIN_NAME),
                 'content' => $this->render(
-                    'TopProducts/top_products_tab_content.html.twig',
+                    'top_products_tab_content.html.twig',
                     [
                         'elementKey' => 'brand',
                         'elementId' => $brandId
@@ -66,15 +66,5 @@ class TopProductsHook extends BaseHook
                 )
             ]
         );
-    }
-
-    public function addTopProductsJs(HookRenderEvent $event): void
-    {
-        $event->add($this->render('TopProducts/top_products_js.html.twig'));
-    }
-
-    public function addTopProductsCss(HookRenderEvent $event): void
-    {
-        $event->add('<link rel="stylesheet" href="/modules/TopProducts/top_products/assets/dist/css/app.css">');
     }
 }

@@ -1,0 +1,9 @@
+{
+  "entrypoints": {
+    "topProducts": {
+      "js": [
+        "/dist/topProducts.js"
+      ]
+    }
+  }
+}

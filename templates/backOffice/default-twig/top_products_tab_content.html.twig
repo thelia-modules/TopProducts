@@ -3,13 +3,15 @@
     var topProductElementId = {{ elementId }};
 </script>
 
+<link rel="stylesheet" href="{{ module_asset('TopProducts', 'assets/dist/topProducts.css') }}">
 <div class="card">
     <div class="card-header">
         <h4 class="card-title">{{ 'Top products'|trans({}, 'topproducts') }}</h4>
     </div>
     <div class="card-body">
-        <div class="row text-center">
+        <div class="text-center row">
             <div id="top_products_container"></div>
         </div>
     </div>
 </div>
+<script src="{{ module_asset('TopProducts', 'assets/dist/topProducts.js') }}"></script>

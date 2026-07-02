@@ -3,29 +3,4 @@
 <routes xmlns="http://symfony.com/schema/routing"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
-
-    <route id="top_products_search" path="/admin/top_products/search/{elementKey}/{elementId}">
-        <default key="_controller">TopProducts\Controller\SearchController::searchAction</default>
-    </route>
-
-    <route id="top_products_get" path="/admin/top_products/get/{elementKey}/{elementId}" methods="GET">
-        <default key="_controller">TopProducts\Controller\TopProductsController::getProductAction</default>
-    </route>
-
-    <route id="top_products_add" path="/admin/top_products/add/{elementKey}/{elementId}/{selectionCode}" methods="POST">
-        <default key="_controller">TopProducts\Controller\TopProductsController::addProductAction</default>
-    </route>
-
-    <route id="top_products_remove" path="/admin/top_products/remove/{topProductId}" methods="POST">
-        <default key="_controller">TopProducts\Controller\TopProductsController::removeProductAction</default>
-    </route>
-
-    <route id="top_products_update" path="/admin/top_products/update/{topProductId}" methods="POST">
-        <default key="_controller">TopProducts\Controller\TopProductsController::updateProductAction</default>
-    </route>
-
-    <route id="top_products_position" path="/admin/top_products/position/{topProductId}" methods="POST">
-        <default key="_controller">TopProducts\Controller\TopProductsController::updatePositionAction</default>
-    </route>
-
 </routes>
