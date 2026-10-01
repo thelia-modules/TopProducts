@@ -51,3 +51,23 @@ The output variables are the same as the loop `product`.
     }
     ...
     {/loop}
+
+
+## Front API resource
+
+The module exposes the selections on the Thelia 3 front API, so that a Twig/Flexy theme can read them without the Smarty loop. The resource is read only: there is no POST, PUT, PATCH or DELETE operation.
+
+`GET /api/front/top_products` returns the pinned products, by ascending `position` unless an `order[...]` parameter is given. The collection is not paginated.
+
+|Parameter |Description |
+|---       |--- |
+|**elementKey** | `category` or `brand` |
+|**elementId** | The id of the category or brand. Repeat it to read several: `elementId[]=3&elementId[]=7` |
+|**selectionCode** | The selection, for example `new` or `best` |
+|**order[position]**, **order[id]** | `asc` or `desc` |
+
+Each item exposes `id`, `elementKey`, `elementId`, `selectionCode`, `position` and `product`, the IRI of the product (`/api/front/products/{id}`).
+
+    GET /api/front/top_products?elementKey=category&elementId=12&selectionCode=best
+
+`GET /api/front/top_products/{id}` reads one row.
