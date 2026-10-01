@@ -38,7 +38,7 @@ final class TopProductPositionExtension implements QueryCollectionExtensionInter
         }
 
         $query
-            ->orderBy(TopProductTableMap::POSITION, Criteria::ASC)
-            ->orderBy(TopProductTableMap::ID, Criteria::ASC);
+            ->orderBy(TopProductTableMap::COL_POSITION, Criteria::ASC)
+            ->orderBy(TopProductTableMap::COL_ID, Criteria::ASC);
     }
 }

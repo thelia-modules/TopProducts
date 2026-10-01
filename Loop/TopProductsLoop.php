@@ -49,20 +49,20 @@ class TopProductsLoop extends ProductLoop
 
         $search->addJoinObject($join);
 
-        $search->where(TopProductTableMap::ELEMENT_KEY.' = ?', $this->getTopProductElementKey(), \PDO::PARAM_STR);
-        $search->where(TopProductTableMap::ELEMENT_ID.' IN (?)', implode(',', $this->getTopProductElementId()), \PDO::PARAM_STR);
+        $search->where(TopProductTableMap::COL_ELEMENT_KEY.' = ?', $this->getTopProductElementKey(), \PDO::PARAM_STR);
+        $search->where(TopProductTableMap::COL_ELEMENT_ID.' IN (?)', implode(',', $this->getTopProductElementId()), \PDO::PARAM_STR);
 
         $selectionCode = $this->getTopProductSelectionCode();
         if (null !== $selectionCode) {
-            $search->where(TopProductTableMap::SELECTION_CODE.' = ?', $selectionCode, \PDO::PARAM_STR);
+            $search->where(TopProductTableMap::COL_SELECTION_CODE.' = ?', $selectionCode, \PDO::PARAM_STR);
         }
 
         $topProductId = $this->getTopProductId();
         if (null !== $topProductId) {
-            $search->where(TopProductTableMap::ID.' = ?', $topProductId, \PDO::PARAM_INT);
+            $search->where(TopProductTableMap::COL_ID.' = ?', $topProductId, \PDO::PARAM_INT);
         }
 
-        $search->withColumn(TopProductTableMap::POSITION, 'top_product_position');
+        $search->withColumn(TopProductTableMap::COL_POSITION, 'top_product_position');
 
         $search->clearOrderByColumns();
         $search->orderBy('top_product_position', Criteria::ASC);
