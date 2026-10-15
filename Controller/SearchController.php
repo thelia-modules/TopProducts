@@ -46,10 +46,10 @@ class SearchController extends BaseAdminController
             $i++;
             $searchConditionName = "search_$i";
             $referenceConditionName = "ref_$i";
-            $productQuery->addCond($searchConditionName, ProductI18nTableMap::TITLE, "%$searchTerm%", Criteria::LIKE);
+            $productQuery->addCond($searchConditionName, ProductI18nTableMap::COL_TITLE, "%$searchTerm%", Criteria::LIKE);
             $searchConditions[] = $searchConditionName;
 
-            $productQuery->addCond($referenceConditionName, ProductTableMap::REF, "$searchTerm", Criteria::LIKE);
+            $productQuery->addCond($referenceConditionName, ProductTableMap::COL_REF, "$searchTerm", Criteria::LIKE);
             $referenceConditions[] = $referenceConditionName;
         }
 
