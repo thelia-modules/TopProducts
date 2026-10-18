@@ -21,41 +21,11 @@ composer thelia/top-products-module:~1.1.0
 
 This module adds a new tab `Top products` in categories and brands where you can create selections and add products in selections.
 
-To retrieve the products of a selections you can use the `top_product` loop.  
-
-## The top_products loop
-
-### Input arguments
-
-The `top_products` loop extend the loop `product`. All the arguments of the product loop are therefore available.
-
-|Argument |Description |
-|---      |--- |
-|**top_product_id** | The id of the selection |
-|**top_product_element_key** | The type of your selection (category or brand) |
-|**top_product_element_id** | The id of the element (category or brand) |
-|**top_product_selection_code** | The name of the selection |
-
-### Output variables
-
-The output variables are the same as the loop `product`.
-
-### Exemple
-
-    {loop 
-        type="top_product" 
-        name="top_product_loop" 
-        top_product_element_key="category"
-        top_product_element_id=$category_id 
-        top_product_selection_code="my-selection"
-    }
-    ...
-    {/loop}
-
+To retrieve the products of a selection, use the front API resource below.
 
 ## Front API resource
 
-The module exposes the selections on the Thelia 3 front API, so that a Twig/Flexy theme can read them without the Smarty loop. The resource is read only: there is no POST, PUT, PATCH or DELETE operation.
+The module exposes the selections on the Thelia 3 front API, so that a Twig/Flexy theme can read them. The resource is read only: there is no POST, PUT, PATCH or DELETE operation.
 
 `GET /api/front/top_products` returns the pinned products, by ascending `position` unless an `order[...]` parameter is given. The collection is not paginated.
 
