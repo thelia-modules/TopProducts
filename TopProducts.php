@@ -36,13 +36,12 @@ class TopProducts extends BaseModule
                 __DIR__.'/TopProducts.php',
                 __DIR__.'/Model/Base/*',
                 __DIR__.'/Model/Map/*',
-                __DIR__.'/Smarty/*',
             ])
             ->autowire(true)
             ->autoconfigure(true);
     }
 
-    public function postActivation(ConnectionInterface $con = null): void
+    public function postActivation(?ConnectionInterface $con = null): void
     {
         $database = new Database($con);
 
@@ -53,7 +52,7 @@ class TopProducts extends BaseModule
         }
     }
 
-    public function update($currentVersion, $newVersion, ConnectionInterface $con = null): void
+    public function update($currentVersion, $newVersion, ?ConnectionInterface $con = null): void
     {
         $finder = (new Finder())->files()->name('#.*?\.sql#')->sortByName()->in(self::UPDATE_PATH);
 
