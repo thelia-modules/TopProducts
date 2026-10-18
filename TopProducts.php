@@ -36,7 +36,6 @@ class TopProducts extends BaseModule
                 __DIR__.'/TopProducts.php',
                 __DIR__.'/Model/Base/*',
                 __DIR__.'/Model/Map/*',
-                __DIR__.'/Smarty/*',
             ])
             ->autowire(true)
             ->autoconfigure(true);
