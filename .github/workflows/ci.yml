@@ -11,4 +11,4 @@ permissions:
 
 jobs:
   ci:
-    uses: thelia-modules/ReusableWorkflow/.github/workflows/module_ci.yml@main
+    uses: thelia-modules/ReusableWorkflow/.github/workflows/module_ci.yml@dependabot/github_actions/github-actions-ad06ce2245
